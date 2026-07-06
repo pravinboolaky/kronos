@@ -1,0 +1,19 @@
+// manifest.json
+
+{
+	"name": "FFTA Chrono",
+	"short_name": "FFTA Chrono",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000",
+	"orientation": "portrait-primary",
+	"icons": [
+		{
+			"src": "/icon240.png",
+			"type": "image/png",
+			"sizes": "240x240"
+		}
+	]
+}
