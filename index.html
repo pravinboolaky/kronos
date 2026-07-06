@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>FFTA – Timer avec choix</title>
+<style>
+  body {
+    font-family: Arial;
+    text-align: center;
+    background: #111;
+    color: white;
+    margin-top: 40px;
+  }
+
+  #phase {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  #display {
+    font-size: 140px;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 20px;
+    background: #222;
+    margin-bottom: 20px;
+    color: #0f0;
+  }
+
+  select, button {
+    padding: 12px 20px;
+    font-size: 20px;
+    margin: 5px;
+  }
+
+  button {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+  }
+</style>
+</head>
+<body>
+
+<h1>🏹 FFTA – Timer avec choix</h1>
+
+<!-- Liste déroulante -->
+<select id="modeSelect" onchange="updateMode()">
+  <option value="240">FFTA – 6 flèches (240 s)</option>
+  <option value="80">FFTA – 4 flèches (80 s)</option>
+</select>
+
+<div id="phase">Prêt</div>
+<div id="display">10</div>
+
+<button onclick="startTimer()">
+  <svg class="icon" viewBox="0 0 24 24">
+    <polygon points="5,3 19,12 5,21"/>
+  </svg>
+  Démarrer
+</button>
+
+<button onclick="stopTimer()">Stop</button>
+<button onclick="resetTimer()">Reset</button>
+
+<audio id="beep">
+  <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+</audio>
+
+<script>
+let interval;
+let currentPhase = 0;
+
+// Phase Prêt fixe
+const readyTime = 10;
+
+// Durée de tir selon le choix
+let shootTime = 240;
+
+// Phases dynamiques
+let phases = [
+  { name: "Prêt", time: readyTime },
+  { name: "Tirer", time: shootTime }
+];
+
+let timeLeft = phases[0].time;
+
+// Met à jour la durée selon la liste déroulante
+function updateMode() {
+  shootTime = parseInt(document.getElementById("modeSelect").value);
+  phases[1].time = shootTime;
+  resetTimer();
+}
+
+function updateDisplay() {
+  const display = document.getElementById("display");
+  document.getElementById("phase").textContent = phases[currentPhase].name;
+  display.textContent = timeLeft;
+
+  // Couleurs dynamiques pendant la phase Tir
+  if (currentPhase === 1) {
+    if (timeLeft < 30) display.style.color = "red";
+    else if (timeLeft < 60) display.style.color = "orange";
+    else display.style.color = "#0f0";
+  } else {
+    display.style.color = "#0f0";
+  }
+}
+
+function startTimer() {
+  if (interval) return;
+
+  interval = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft--;
+      updateDisplay();
+    } else {
+      document.getElementById("beep").play();
+      currentPhase++;
+
+      if (currentPhase >= phases.length) {
+        clearInterval(interval);
+        interval = null;
+        return;
+      }
+
+      timeLeft = phases[currentPhase].time;
+      updateDisplay();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(interval);
+  interval = null;
+}
+
+function resetTimer() {
+  clearInterval(interval);
+  interval = null;
+  currentPhase = 0;
+  timeLeft = phases[0].time;
+  updateDisplay();
+}
+
+updateDisplay();
+</script>
+
+</body>
+</html>
