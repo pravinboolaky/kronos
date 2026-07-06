@@ -11,7 +11,7 @@
 	"orientation": "portrait-primary",
 	"icons": [
 		{
-			"src": "/icon240.png",
+			"src": "/kronos/icon240.png",
 			"type": "image/png",
 			"sizes": "240x240"
 		}
