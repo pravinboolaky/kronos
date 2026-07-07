@@ -1,160 +1,355 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="/kronos/manifest.json">
-<script src="/kronos/app.js"></script>
-<title>FFTA – Timer avec choix</title>
-<style>
-  body {
-    font-family: Arial;
-    text-align: center;
-    background: #111;
-    color: white;
-    margin-top: 40px;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="icon-32.png" />
+  <link rel="manifest" href="/kronos/manifest.json">
+  <script src="/kronos/app.js"></script>
+  <title>FFTA – Timer avec choix</title>
+  <style>
+    @font-face {
+      font-family: LCD;
+      src: url('digital-7.ttf');
+    }
 
-  #phase {
-    font-size: 40px;
-    margin-bottom: 20px;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  #display {
-    font-size: 140px;
-    font-weight: bold;
-    padding: 20px;
-    border-radius: 20px;
-    background: #222;
-    margin-bottom: 20px;
-    color: #0f0;
-  }
+    html {
+      height: 100%;
+    }
 
-  select, button {
-    padding: 12px 20px;
-    font-size: 20px;
-    margin: 5px;
-  }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #111;
+      color: white;
+      height: 100%;
+      overflow: scroll;
+    }
 
-  button {
-    cursor: pointer;
-    display: inline-flex;
+    #container {
+      height: 100%;
+    }
+
+    #panel {
+          position: absolute;
+    bottom: 0;
+    width: 100%;
+    }
+
+    #display {
+
+        display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    align-content: center;
+    flex-direction: row;
   }
 
-  .icon {
-    width: 24px;
-    height: 24px;
-    fill: white;
-  }
-</style>
+    #step {
+      font-size: 40px;
+      margin-bottom: 20px;
+      flex: 1;
+
+    }
+
+    #team {
+      font-size: 120px;
+      flex: 1;
+
+    }
+
+    #time {
+      font-size: 240px;
+      font-weight: bold;
+      padding: 20px;
+      border-radius: 20px;
+      background: #222;
+      margin-bottom: 20px;
+      color: #0f0;
+      flex: 2;
+    }
+
+    select,
+    button {
+    padding: 16px;
+    font-size: 20px;
+    margin: 8px;
+    background-color: #111;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+    }
+
+    
+
+    button {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+        #board {
+      width: 100%;
+      height: 100%;
+    }
+
+
+  </style>
 </head>
+
 <body>
 
-<h1>🏹 FFTA – Timer avec choix</h1>
+  <div id="container">
 
-<!-- Liste déroulante -->
-<select id="modeSelect" onchange="updateMode()">
-  <option value="240">FFTA – 6 flèches (240 s)</option>
-  <option value="80">FFTA – 4 flèches (80 s)</option>
-</select>
 
-<div id="phase">Prêt</div>
-<div id="display">10</div>
+    <div id="board">
 
-<button onclick="startTimer()">
-  <svg class="icon" viewBox="0 0 24 24">
-    <polygon points="5,3 19,12 5,21"/>
-  </svg>
-  Démarrer
-</button>
+      <div id="display">
+        <div>
+      <div id="team"></div>
+      <div id="step"></div>
 
-<button onclick="stopTimer()">Stop</button>
-<button onclick="resetTimer()">Reset</button>
+        </div>
+      <div id="time"></div>
+      </div>
 
-<audio id="beep">
-  <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
-</audio>
 
-<script>
-let interval;
-let currentPhase = 0;
 
-// Phase Prêt fixe
-const readyTime = 10;
+      <div>
+        <button id="timer-btn" onclick="onToggleChronoButton()"></button>
+      </div>
 
-// Durée de tir selon le choix
-let shootTime = 240;
 
-// Phases dynamiques
-let phases = [
-  { name: "Prêt", time: readyTime },
-  { name: "Tirer", time: shootTime }
-];
+    </div>
 
-let timeLeft = phases[0].time;
+    <div id="panel">
 
-// Met à jour la durée selon la liste déroulante
-function updateMode() {
-  shootTime = parseInt(document.getElementById("modeSelect").value);
-  phases[1].time = shootTime;
-  resetTimer();
-}
 
-function updateDisplay() {
-  const display = document.getElementById("display");
-  document.getElementById("phase").textContent = phases[currentPhase].name;
-  display.textContent = timeLeft;
 
-  // Couleurs dynamiques pendant la phase Tir
-  if (currentPhase === 1) {
-    if (timeLeft < 30) display.style.color = "red";
-    else if (timeLeft < 60) display.style.color = "orange";
-    else display.style.color = "#0f0";
-  } else {
-    display.style.color = "#0f0";
-  }
-}
+      <!-- Liste déroulante -->
+      <select id="modeSelect">
+        <option value="0">FFTA – TAE (10s - 240 s)</option>
+        <option value="1">FFTA – MIXTE (10s - 80 s)</option>
+        </label>
+      </select>
 
-function startTimer() {
-  if (interval) return;
+      <select id="sequenceSelect">
+        <option value="SOLO">SOLO</option>
+        <option value="ABCD">AB > CD </option>
+        <option value="CDAB">CD > AB</option>
+        </label>
+      </select>
 
-  interval = setInterval(() => {
-    if (timeLeft > 0) {
-      timeLeft--;
-      updateDisplay();
-    } else {
-      document.getElementById("beep").play();
-      currentPhase++;
+      <button onclick="onResetBtn()">APPLIQUER</button>
 
-      if (currentPhase >= phases.length) {
-        clearInterval(interval);
-        interval = null;
-        return;
+
+      <div>
+        <input type="checkbox" id="horns" name="horns" />
+        <label for="horns">Désactiver temps préparation</label>
+      </div>
+
+      <div>
+              <h1>⏱ Chrono FFTA 🇫🇷</h1>
+              <p>Made from Paris with love ❤️ @ Copyright Pravin Boolaky</p>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+
+  <audio id="beep">
+    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+  </audio>
+
+
+  <script>
+
+    const chronoStateReset = 1;
+    const chronoStateRunning = 2;
+    const chronoStatePaused = 3;
+    const chronoStateTimeOut = 4;
+    let chronoState = chronoStateReset;
+
+    let interval;
+    let selectedMode = null;
+    let selectedSequence = null;
+    let currentSequenceIndex = 0;
+
+    let modes = [
+      { label: "FFTA_6ARROWS", readyTime: 2, shootTime: 3 },
+      { label: "FFTA_6ARROWS", readyTime: 2, shootTime: 3 }
+    ];
+
+    let timeLeft = 0;
+
+    function refreshDisplay() {
+
+      console.log("updateDisplay");
+      let teamHtml = document.getElementById("team");
+      let stepHtml = document.getElementById("step");
+      let timeHtml = document.getElementById("time");
+      let chronoBtnHtml = document.getElementById("timer-btn");
+
+      if (chronoState === chronoStateReset) { // Démarrer
+        timeHtml.textContent = selectedSequence[currentSequenceIndex].time;
+        teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
+        stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
+        chronoBtnHtml.textContent = "DÉMARRER";
+      }
+      else if (chronoState === chronoStatePaused) { // Pause
+        timeHtml.textContent = timeLeft;
+        teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
+        stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
+        chronoBtnHtml.textContent = "REPRENDRE";
+      }
+      else if (chronoState === chronoStateRunning) { // Continue
+        timeHtml.textContent = timeLeft;
+        teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
+        stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
+        chronoBtnHtml.textContent = "PAUSE";
+      }
+      else if (chronoState === chronoStateTimeOut) { // Relancer
+        timeHtml.textContent = "X";
+        teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
+        stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
+        chronoBtnHtml.textContent = "RELANCER";
+      }
+    }
+
+
+
+    function runChrono() {
+
+      if (interval) return;
+
+      updateChronoStateTo(chronoStateRunning);
+      refreshDisplay();
+
+      interval = setInterval(() => {
+
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateChronoStateTo(chronoStateRunning);
+
+        } else {
+
+          //document.getElementById("beep").play();
+
+
+          if (currentSequenceIndex + 1 >= selectedSequence.length) { // end of sequence
+            updateChronoStateTo(chronoStateTimeOut);
+            destroyInterval();
+          } else { // next sequence step
+            currentSequenceIndex++;
+            timeLeft = selectedSequence[currentSequenceIndex].time;
+          }
+
+        }
+
+        refreshDisplay();
+
+
+      }, 1000);
+
+
+    }
+
+    function pauseChrono() {
+      destroyInterval();
+      updateChronoStateTo(chronoStatePaused)
+      refreshDisplay();
+    }
+
+    function resetChrono() {
+
+      destroyInterval();
+
+      let selectedModeIndex = parseInt(document.getElementById("modeSelect").value);
+      let selectedSequenceValue = document.getElementById("sequenceSelect").value;
+
+      selectedMode = modes[selectedModeIndex];
+      let readyTime = selectedMode.readyTime;
+      let shootTime = selectedMode.shootTime;
+
+      switch (selectedSequenceValue) {
+        case "SOLO":
+          selectedSequence = [
+            { team: "A", step: "PREPA.", time: readyTime },
+            { team: "A", step: "TIR", time: shootTime }
+          ]
+          break;
+        case "ABCD":
+          selectedSequence = [
+            { team: "A</br>B", step: "PREPA", time: readyTime },
+            { team: "A</br>B", step: "TIR", time: shootTime },
+            { team: "C</br>D", step: "PREPA", time: readyTime },
+            { team: "C</br>D", step: "TIR", time: shootTime }
+          ]
+          break;
+        case "CDAB":
+          selectedSequence = [
+            { team: "C</br>D", step: "PREPA", time: readyTime },
+            { team: "C</br>D", step: "TIR", time: shootTime },
+            { team: "A</br>B", step: "PREPA", time: readyTime },
+            { team: "A</br>B", step: "TIR", time: shootTime }
+          ]
+          break;
       }
 
-      timeLeft = phases[currentPhase].time;
-      updateDisplay();
+      timeLeft = selectedMode.readyTime;
+      currentSequenceIndex = 0;
+      updateChronoStateTo(chronoStateReset);
+      refreshDisplay();
     }
-  }, 1000);
-}
 
-function stopTimer() {
-  clearInterval(interval);
-  interval = null;
-}
+    function destroyInterval() {
+      clearInterval(interval);
+      interval = null;
+    }
 
-function resetTimer() {
-  clearInterval(interval);
-  interval = null;
-  currentPhase = 0;
-  timeLeft = phases[0].time;
-  updateDisplay();
-}
 
-updateDisplay();
-</script>
+    function updateChronoStateTo(status) {
+      chronoState = status;
+    }
+
+    function onResetBtn() {
+      resetChrono();
+    }
+
+    function onToggleChronoButton() {
+
+      if (chronoState === chronoStateReset) { // Démarrer
+        runChrono();
+      }
+      else if (chronoState === chronoStatePaused) { // Continuer
+        runChrono();
+      }
+      else if (chronoState === chronoStateRunning) { // Pause
+        pauseChrono();
+      }
+      else if (chronoState === chronoStateTimeOut) { // Relancer
+        resetChrono();
+        runChrono();
+      }
+    }
+
+    resetChrono();
+
+  </script>
 
 </body>
+
 </html>
