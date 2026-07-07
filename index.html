@@ -11,13 +11,19 @@
   <style>
     @font-face {
       font-family: LCD;
-      src: url('digital-7.ttf');
+      src: url('Montserrat.ttf');
+    }
+
+    @font-face {
+      font-family: digit;
+      src: url('monofonto.otf');
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: LCD;
     }
 
     html {
@@ -25,81 +31,142 @@
     }
 
     body {
-      font-family: sans-serif;
       text-align: center;
       background-color: #111;
       color: white;
       height: 100%;
-      overflow: scroll;
     }
 
     #container {
       height: 100%;
+      overflow: scroll;
     }
-
-    #panel {
-          position: absolute;
-    bottom: 0;
-    width: 100%;
+    #chrono {
+      width: 100%;
+      height: 100%;
     }
-
     #display {
-
-        display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-direction: row;
-  }
-
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      flex-direction: row;
+      height: 100%;
+    }
     #step {
       font-size: 40px;
       margin-bottom: 20px;
       flex: 1;
-
     }
-
     #team {
       font-size: 120px;
       flex: 1;
+            font-weight: bold;
+    }
+    #sequence {
+      flex: 1;
+            font-weight: bold;
+                    letter-spacing: 4px;
+
 
     }
-
+   #actions {
+      flex: 1;
+    }
     #time {
-      font-size: 240px;
-      font-weight: bold;
-      padding: 20px;
-      border-radius: 20px;
-      background: #222;
-      margin-bottom: 20px;
-      color: #0f0;
+      font-size: 35vw;
+      /* font-weight: bold; */
+      color: #ffeb3b;
       flex: 2;
+      font-family: digit;
+    }
+    #panel {
+width: 100%;
+height: 100%;
+    padding: 60px 0px;
+    background: #222;
     }
 
-    select,
-    button {
-    padding: 16px;
+    fieldset{
+    display: inline-block;
+    border: 1px solid #666;
+    border-radius: 0px 8px 8px;
+    margin: 8px 0px;
+    width: 100%;
+    }
+    legend {
+font-size: 12px;
+    padding: 0px 8px;
+    text-align: left;    }
+
+    select {
     font-size: 20px;
     margin: 8px;
-    background-color: #111;
-    border: 1px solid #333;
+    background-color: #222;
+    border: none;
     color: white;
     border-radius: 8px;
+    text-align: left;
+
+    width: 90%;
     }
-
-    
-
     button {
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid;
+    background: none;
+    color: #FFF;
+            letter-spacing: 4px;
+font-style: italic;
+    border-radius: 100px;
+
+    }
+    #timer-btn {
+    font-size: 24px;
+    padding: 16px 32px;
+
     }
 
-        #board {
-      width: 100%;
-      height: 100%;
+    #form {
+width: 300px;
+    display: inline-block;
+    margin: 80px 0px;
+    }
+
+    #form-btn {
+    font-size: 16px;
+    padding: 16px 32px;
+    margin-top: 20px;
+    width: 100%;
+
+    }
+
+    input {
+      width: 24px;
+      height: 24px;
+      vertical-align: bottom;
+    }
+
+    #settings div {
+      margin: 10px;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    a {
+      color: #FFF;
+    }
+
+        @media (max-width: 640px) {
+      #display {
+      flex-direction: column;
+      }
+
+      #team br {
+        display: none;
+      }
     }
 
 
@@ -109,58 +176,68 @@
 <body>
 
   <div id="container">
-
-
-    <div id="board">
-
+    <div id="chrono">
       <div id="display">
-        <div>
-      <div id="team"></div>
-      <div id="step"></div>
-
+        <div id="sequence">
+          <div id="team"></div>
+          <div id="step"></div>
         </div>
-      <div id="time"></div>
-      </div>
-
-
-
-      <div>
+        <div id="time"></div>
+      <div id="actions">
         <button id="timer-btn" onclick="onToggleChronoButton()"></button>
       </div>
+      </div>
+
 
 
     </div>
 
     <div id="panel">
 
+      <h1 id="title">Chronomètre FFTA 🇫🇷</h1>
 
-
-      <!-- Liste déroulante -->
-      <select id="modeSelect">
-        <option value="0">FFTA – TAE (10s - 240 s)</option>
-        <option value="1">FFTA – MIXTE (10s - 80 s)</option>
+      <div id="form">
+      <fieldset>
+        <legend>COMPÉTITION</legend>
+              <select id="modeSelect">
+        <option value="0">TAE 6 flèches</option>
+        <option value="0">TAI 3 flèches</option>
+        <option value="1">MIXTE 4 flèches</option>
         </label>
       </select>
-
+      </fieldset>
+      <br>
+      <fieldset>
+        <legend>TIR</legend>
       <select id="sequenceSelect">
-        <option value="SOLO">SOLO</option>
+        <option value="SOLO">SEUL</option>
         <option value="ABCD">AB > CD </option>
         <option value="CDAB">CD > AB</option>
         </label>
       </select>
+      </fieldset>
+      <br>
+      <fieldset id="settings">
+        <legend>SETTINGS</legend>
+        <div>
+        <input type="checkbox" id="disable-prepa" name="disable-prepa" />
+        <label for="disable-prepa">Désactiver la préparation</label>
+        </div>
+        <div>
+        <input type="checkbox" id="disable-sound" name="disable-sound" />
+        <label for="disable-sound">Désactiver le son</label>
+        </div>
+      </fieldset>
+      <br>
+            <button id="form-btn" onclick="onResetBtn()">NOUVEAU DÉPART</button>
 
-      <button onclick="onResetBtn()">APPLIQUER</button>
 
-
-      <div>
-        <input type="checkbox" id="horns" name="horns" />
-        <label for="horns">Désactiver temps préparation</label>
       </div>
 
-      <div>
-              <h1>⏱ Chrono FFTA 🇫🇷</h1>
-              <p>Made from Paris with love ❤️ @ Copyright Pravin Boolaky</p>
-      </div>
+
+
+
+      <div>Made in Paris with ❤️ by <a target="_blank" href="https://www.linkedin.com/in/pravinboolaky/">Pravin Boolaky</a></div>
 
     </div>
 
@@ -189,8 +266,8 @@
     let currentSequenceIndex = 0;
 
     let modes = [
-      { label: "FFTA_6ARROWS", readyTime: 2, shootTime: 3 },
-      { label: "FFTA_6ARROWS", readyTime: 2, shootTime: 3 }
+      { label: "FFTA_6ARROWS", readyTime: 10, shootTime: 240 },
+      { label: "FFTA_4ARROWS", readyTime: 10, shootTime: 80 }
     ];
 
     let timeLeft = 0;
@@ -207,25 +284,25 @@
         timeHtml.textContent = selectedSequence[currentSequenceIndex].time;
         teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
         stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
-        chronoBtnHtml.textContent = "DÉMARRER";
+        chronoBtnHtml.textContent = "▶️ DÉMARRER";
       }
       else if (chronoState === chronoStatePaused) { // Pause
         timeHtml.textContent = timeLeft;
         teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
         stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
-        chronoBtnHtml.textContent = "REPRENDRE";
+        chronoBtnHtml.textContent = "▶️ REPRENDRE ";
       }
       else if (chronoState === chronoStateRunning) { // Continue
         timeHtml.textContent = timeLeft;
         teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
         stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
-        chronoBtnHtml.textContent = "PAUSE";
+        chronoBtnHtml.textContent = "⏸ PAUSE";
       }
       else if (chronoState === chronoStateTimeOut) { // Relancer
-        timeHtml.textContent = "X";
+        timeHtml.textContent = "FIN";
         teamHtml.innerHTML = selectedSequence[currentSequenceIndex].team;
         stepHtml.textContent = selectedSequence[currentSequenceIndex].step;
-        chronoBtnHtml.textContent = "RELANCER";
+        chronoBtnHtml.textContent = "🔁 RELANCER";
       }
     }
 
@@ -287,23 +364,23 @@
       switch (selectedSequenceValue) {
         case "SOLO":
           selectedSequence = [
-            { team: "A", step: "PREPA.", time: readyTime },
+            { team: "A", step: "PRÉPA", time: readyTime },
             { team: "A", step: "TIR", time: shootTime }
           ]
           break;
         case "ABCD":
           selectedSequence = [
-            { team: "A</br>B", step: "PREPA", time: readyTime },
+            { team: "A</br>B", step: "PRÉPA", time: readyTime },
             { team: "A</br>B", step: "TIR", time: shootTime },
-            { team: "C</br>D", step: "PREPA", time: readyTime },
+            { team: "C</br>D", step: "PRÉPA", time: readyTime },
             { team: "C</br>D", step: "TIR", time: shootTime }
           ]
           break;
         case "CDAB":
           selectedSequence = [
-            { team: "C</br>D", step: "PREPA", time: readyTime },
+            { team: "C</br>D", step: "PRÉPA", time: readyTime },
             { team: "C</br>D", step: "TIR", time: shootTime },
-            { team: "A</br>B", step: "PREPA", time: readyTime },
+            { team: "A</br>B", step: "PRÉPA", time: readyTime },
             { team: "A</br>B", step: "TIR", time: shootTime }
           ]
           break;
