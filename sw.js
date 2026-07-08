@@ -1,9 +1,11 @@
 // sw.js
 
-const staticSite = 'website';
+const staticSite = 'kronos';
 const assets = [
-	'/', 
-	'app.js'
+	'/kronos/',
+	'/kronos/index.html',
+	'/kronos/style.css',
+	'/kronos/app.js'
 ];
 
 self.addEventListener('install', (installEvent) => {

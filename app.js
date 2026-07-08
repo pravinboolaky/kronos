@@ -1,21 +1,28 @@
 // app.js
-if ('serviceWorker' in navigator) {
-	window.addEventListener('load', function () {
-		navigator.serviceWorker.register('/kronos/sw.js').then(
-			function (registration) {
-				// registration succeed
-				console.log(
-					'ServiceWorker registration successful with scope: ',
-					registration.scope
-				);
-			},
-			function (error) {
-				// registration failed
-				console.log('ServiceWorker registration failed: ', error);
-			}
-		);
-	});
-}
+// if ('serviceWorker' in navigator) {
+// 	window.addEventListener('load', function () {
+// 		navigator.serviceWorker.register('/kronos/sw.js').then(
+// 			function (registration) {
+// 				// registration succeed
+// 				console.log(
+// 					'ServiceWorker registration successful with scope: ',
+// 					registration.scope
+// 				);
+// 			},
+// 			function (error) {
+// 				// registration failed
+// 				console.log('ServiceWorker registration failed: ', error);
+// 			}
+// 		);
+// 	});
+// }
+
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register (
+          '/kronos/sw.js',
+          {scope: '/kronos/'}
+        )
+      }
 
 const CHRONO_STATE_START = 1;
 const CHRONO_STATE_RUNNING = 2;
