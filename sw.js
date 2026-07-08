@@ -1,7 +1,10 @@
 // sw.js
 
 const staticSite = 'website';
-const assets = ['/', 'app.js'];
+const assets = [
+	'/', 
+	'app.js'
+];
 
 self.addEventListener('install', (installEvent) => {
 	installEvent.waitUntil(
