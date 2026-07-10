@@ -1,28 +1,29 @@
 // app.js
-// if ('serviceWorker' in navigator) {
-// 	window.addEventListener('load', function () {
-// 		navigator.serviceWorker.register('/kronos/sw.js').then(
-// 			function (registration) {
-// 				// registration succeed
-// 				console.log(
-// 					'ServiceWorker registration successful with scope: ',
-// 					registration.scope
-// 				);
-// 			},
-// 			function (error) {
-// 				// registration failed
-// 				console.log('ServiceWorker registration failed: ', error);
-// 			}
-// 		);
-// 	});
-// }
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', function () {
+		navigator.serviceWorker.register('/kronos/sw.js',
+          {scope: '/kronos/'}).then(
+			function (registration) {
+				// registration succeed
+				console.log(
+					'ServiceWorker registration successful with scope: ',
+					registration.scope
+				);
+			},
+			function (error) {
+				// registration failed
+				console.log('ServiceWorker registration failed: ', error);
+			}
+		);
+	});
+}
 
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register (
-          '/kronos/sw.js',
-          {scope: '/kronos/'}
-        )
-      }
+    //   if (navigator.serviceWorker) {
+    //     navigator.serviceWorker.register (
+    //       '/kronos/sw.js',
+    //       {scope: '/kronos/'}
+    //     )
+    //   }
 
 const CHRONO_STATE_START = 1;
 const CHRONO_STATE_RUNNING = 2;
@@ -39,7 +40,7 @@ let selectedSequence = null;
 let currentSequenceIndex = 0;
 
 let shootings = [
-	{ key: "individuel_6", readyTime: 2, shootTime: 34},
+	{ key: "individuel_6", readyTime: 2, shootTime: 5},
 	{ key: "individuel_3", readyTime: 10, shootTime: 120},
 	{ key: "individuel_1", readyTime: 10, shootTime: 20},
 	{ key: "equipe_3_6", readyTime: 10, shootTime: 120},
@@ -114,7 +115,7 @@ function runChrono() {
 			timeLeft--;
 			updateChronoStateTo(CHRONO_STATE_RUNNING);
 		} else {
-			//document.getElementById("beep").play();
+			// document.getElementById("buzzer2").play();
 			if (currentSequenceIndex + 1 >= selectedSequence.length) { // end of sequence
 				updateChronoStateTo(CHRONO_STATE_END);
 				destroyInterval();
@@ -195,7 +196,20 @@ function updateChronoStateTo(status) {
 }
 
 function onResetBtn() {
-	resetChrono();
+
+	if(chronoState === CHRONO_STATE_RUNNING){
+		pauseChrono();
+	}
+
+	if (chronoState === CHRONO_STATE_RUNNING || chronoState === CHRONO_STATE_PAUSED) {
+		var confirmation=confirm("Êtes-vous sûr de vouloir réinitialiser le chrono ?");
+		if (confirmation){
+			resetChrono();
+		}else{
+		//action à faire pour la valeur false
+		}
+	}
+
 }
 
 function onToggleChronoButton() {
@@ -223,3 +237,51 @@ function onSoundToggle() {
 	isSoundEnabled = document.getElementById("enable-sound").checked;
 }
 resetChrono();
+
+
+// function topFunction() {
+// 	console.log("topFunction");
+
+// 	window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+
+// //   document.body.scrollTop = 0; // For Safari
+// //   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+// }
+
+
+// // Initialize deferredPrompt for use later to show browser install prompt.
+// let deferredPrompt;
+
+// window.addEventListener('beforeinstallprompt', (e) => {
+//   // Prevent the mini-infobar from appearing on mobile
+//   e.preventDefault();
+//   // Stash the event so it can be triggered later.
+//   deferredPrompt = e;
+//   // Update UI notify the user they can install the PWA
+//   //showInstallPromotion();
+//   // Optionally, send analytics event that PWA install promo was shown.
+//   console.log(`'beforeinstallprompt' event was fired.`);
+// });
+
+// document.getElementById("install-btn").addEventListener('click', async () => {
+//   // Hide the app provided install promotion
+//  // hideInstallPromotion();
+//   // Show the install prompt
+//   deferredPrompt.prompt();
+//   // Wait for the user to respond to the prompt
+//   const { outcome } = await deferredPrompt.userChoice;
+//   // Optionally, send analytics event with outcome of user choice
+//   console.log(`User response to the install prompt: ${outcome}`);
+//   // We've used the prompt and can't use it again, throw it away
+//   deferredPrompt = null;
+// });
+
+
+// window.addEventListener('appinstalled', () => {
+//   // Hide the app-provided install promotion
+//  // hideInstallPromotion();
+//   // Clear the deferredPrompt so it can be garbage collected
+//   deferredPrompt = null;
+//   // Optionally, send analytics event to indicate successful install
+//   console.log('PWA was installed');
+// });

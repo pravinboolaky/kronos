@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="icon-32.png" />
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
-  <title>CHRONOMÈTRE FFTA</title>
+  <title>CHRONO FFTA 🇫🇷</title>
 </head>
 
 <body>
@@ -22,12 +22,13 @@
         <button id="chrono-btn" onclick="onToggleChronoButton()">
           <img id="chrono-btn-img">
         </button>
+        <button id="form-btn" onclick="onResetBtn()">RESET</button>
+
       </div>
     </div>
     <div id="panel">
-      <h1 id="title">Chrono FFTA 🇫🇷</h1>
-      <p>Chronomètre d'entraînement basé sur la réglementation FFTA<br> pour le tir Arc Classique et Arc à Poulie.</p>
       <div id="form">
+
         <fieldset>
           <legend>TIR</legend>
           <select id="modeSelect">
@@ -58,14 +59,40 @@
             <label for="enable-sound">Activer les signaux sonores.</label>
           </div>
         </fieldset>
-        <button id="form-btn" onclick="onResetBtn()">NOUVEAU DÉPART</button>
       </div>
-      <div>Made in Paris with ❤️ by <a target="_blank" href="https://www.linkedin.com/in/pravinboolaky/">Pravin
-          Boolaky</a></div>
+
+      <div id="infos">
+
+      <h1 id="title">CHRONO FFTA 🇫🇷</h1>
+      <p>Chronomètre d'entraînement basé sur la réglementation FFTA<br> pour le tir Arc Classique et Arc à Poulie.</p>
+
+      <h2>Installer l'application</h2>
+      <p>Vous pouvez installer CHRONO FFTA comme une application pour un accès rapide et hors-ligne.</p>
+
+      <h3>Sur iOS :</h3>
+      <p>1. Cliquer sur le bouton de <i>Partage</i>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h120v80H240v400h480v-400H600v-80h120q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm200-240v-447l-64 64-56-57 160-160 160 160-56 57-64-64v447h-80Z"/></svg>
+      de votre navigateur.
+      </p>  
+      <p>2. Sélectionner <i>Sur l'écran d'accueil</i> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg> </p>
+
+
+       <h3>Sur Android :</h3>
+      <p>1. Cliquer sur le bouton de <i>Plus d'options</i> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg> de votre navigateur.</p>  
+      <p>2. Sélectionner <i>Ajouter sur l'écran d'accueil</i> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ffffff"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18 1.01L8 1c-1.1 0-2 .9-2 2v3h2V5h10v14H8v-1H6v3c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM10 15h2V8H5v2h3.59L3 15.59 4.41 17 10 11.41V15z"/></svg></p>
+
+      <div id="footer">
+        Made in Paris with ❤️ by <a target="_blank" href="https://www.linkedin.com/in/pravinboolaky/">Pravin Boolaky</a>
+      </div>
+      </div>
+
     </div>
   </div>
-  <audio id="beep">
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+  <audio id="buzzer1">
+    <source src="/assets/buzzer1.mp3" type="audio/ogg">
+  </audio>
+  <audio id="buzzer2">
+    <source src="/assets/buzzer2.mp3" type="audio/ogg">
   </audio>
   <script async="true" src="app.js"></script>
 </body>
