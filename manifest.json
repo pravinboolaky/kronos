@@ -1,22 +1,22 @@
 {
 	"name": "Chrono FFTA",
 	"short_name": "Chrono FFTA",
-	"start_url": "/kronos/",
-	"scope": "/kronos/",
+	"start_url": "/chrono-ffta/",
+	"scope": "/chrono-ffta/",
 	"display": "standalone",
 	"background_color": "#000000",
 	"theme_color": "#000000",
 	"orientation": "portrait-primary",
 	"icons": [
 		{
-			"src": "/kronos/assets/icon-192.png",
+			"src": "/chrono-ffta/assets/icon-192.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "/kronos/assets/icon-512.png",
+			"src": "/chrono-ffta/assets/icon-512.png",
 			"type": "image/png",
 			"sizes": "512x512"
-		},
+		}
 	]
 }

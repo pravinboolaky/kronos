@@ -36,7 +36,7 @@ let selectedSequence = null;
 let currentSequenceIndex = 0;
 
 let shootings = [
-	{ key: "individuel_6", readyTime: 3, shootTime: 35 , warningTime: 30},
+	{ key: "individuel_6", readyTime: 10, shootTime: 180 , warningTime: 30},
 	{ key: "individuel_3", readyTime: 10, shootTime: 120 , warningTime: 30},
 	{ key: "individuel_1", readyTime: 10, shootTime: 20 , warningTime: 10},
 	{ key: "equipe_3_6", readyTime: 10, shootTime: 120 , warningTime: 30},

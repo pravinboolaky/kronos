@@ -1,18 +1,18 @@
 // sw.js
 
-const staticSite = 'kronos';
+const staticSite = 'chrono-ffta';
 const assets = [
-	'/kronos/',
-	'/kronos/index.html',
-	'/kronos/style.css',
-	'/kronos/app.js',
-	'/kronos/assets/montserrat.ttf',
-	'/kronos/assets/monofonto.otf',
-	'/kronos/assets/btn-pause.png',
-	'/kronos/assets/btn-play.png',
-	'/kronos/assets/btn-replay.png',
-	'/kronos/assets/buzzer1.mp3',
-	'/kronos/assets/buzzer2.mp3'
+	'/chrono-ffta/',
+	'/chrono-ffta/index.html',
+	'/chrono-ffta/style.css',
+	'/chrono-ffta/app.js',
+	'/chrono-ffta/assets/montserrat.ttf',
+	'/chrono-ffta/assets/monofonto.otf',
+	'/chrono-ffta/assets/btn-pause.png',
+	'/chrono-ffta/assets/btn-play.png',
+	'/chrono-ffta/assets/btn-replay.png',
+	'/chrono-ffta/assets/buzzer1.mp3',
+	'/chrono-ffta/assets/buzzer2.mp3'
 ];
 
 self.addEventListener('install', (installEvent) => {
