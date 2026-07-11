@@ -1,8 +1,8 @@
 // app.js
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function () {
-		navigator.serviceWorker.register('/kronos/sw.js',
-			{ scope: '/kronos/' }).then(
+		navigator.serviceWorker.register('/chrono-ffta/sw.js',
+			{ scope: '/chrono-ffta/' }).then(
 				function (registration) {
 					// registration succeed
 					console.log(
