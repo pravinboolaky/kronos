@@ -1,6 +1,6 @@
 {
-	"name": "FFTA Chrono",
-	"short_name": "FFTA Chrono",
+	"name": "Chrono FFTA",
+	"short_name": "Chrono FFTA",
 	"start_url": "/kronos/",
 	"scope": "/kronos/",
 	"display": "standalone",
@@ -9,9 +9,14 @@
 	"orientation": "portrait-primary",
 	"icons": [
 		{
-			"src": "/kronos/assets/icon240.png",
+			"src": "/kronos/assets/icon-192.png",
 			"type": "image/png",
-			"sizes": "240x240"
-		}
+			"sizes": "192x192"
+		},
+		{
+			"src": "/kronos/assets/icon-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		},
 	]
 }
